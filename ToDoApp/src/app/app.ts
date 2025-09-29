@@ -1,12 +1,5 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { appConfig } from './app.config';
+import { ToDoComponent } from './todo/todo';
 
-@Component({
-  selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.html',
-  styleUrl: './app.css'
-})
-export class App {
-  protected readonly title = signal('ToDoApp');
-}
+bootstrapApplication(ToDoComponent, appConfig);

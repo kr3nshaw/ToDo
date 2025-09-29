@@ -1,0 +1,15 @@
+<div class="todo-container">
+    <h2>To Do</h2>
+
+    <form (submit)="addItem(); $event.preventDefault()">
+        <input type="text" [(ngModel)]="newName" name="name" placeholder="Add new item" />
+        <button type="submit">Add</button>
+    </form>
+
+    <ul>
+        <li *ngFor="let item of items">
+            <span>{{ item.name }}</span>
+            <button (click)="deleteItem(item.id)">Delete</button>
+        </li>
+    </ul>
+</div>
