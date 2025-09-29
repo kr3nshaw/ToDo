@@ -1,23 +1,43 @@
+using ToDoApi.Models;
+using ToDoApi.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddSingleton<Service>();
 
-builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddCors();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+app.UseCors(policy => policy
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+);
+
+app.MapGet("/api/todo/", (Service service) =>
 {
-    app.MapOpenApi();
-}
+    return Results.Ok(service.GetItems());
+});
 
-app.UseHttpsRedirection();
+app.MapGet("/api/todo/{id}", (int id, Service service) =>
+{
+    var item = service.GetItemById(id);
 
-app.UseAuthorization();
+    return item is not null ? Results.Ok(item) : Results.NotFound();
+});
 
-app.MapControllers();
+app.MapPost("/api/todo", (Item item, Service service) =>
+{
+    var newItem = service.Add(item);
+
+    return Results.Created($"/api/todo/{newItem.Id}", newItem);
+});
+
+app.MapDelete("/api/todo/{id}", (int id, Service service) =>
+{
+    return service.Delete(id) ? Results.NoContent() : Results.NotFound();
+});
 
 app.Run();
