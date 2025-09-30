@@ -1,5 +1,5 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
-import { ToDoComponent } from './app/todo/todo';
+import { appConfig } from './todo/todo.config';
+import { ToDoComponent } from './todo/todo';
 
 bootstrapApplication(ToDoComponent, appConfig);

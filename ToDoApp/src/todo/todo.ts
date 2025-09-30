@@ -3,15 +3,13 @@ import { ToDo } from '../models/todo';
 import { ToDoService } from '../services/todo.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
 
 @Component({
   standalone: true,
   selector: 'app-todo',
-  template: `<router-outlet></router-outlet`,
   templateUrl: './todo.html',
   styleUrls: ['./todo.css'],
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule],
 })
 export class ToDoComponent implements OnInit {
   items: ToDo[] = [];
